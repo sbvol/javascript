@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="jquery-3.3.1.min.js" type="text/javascript"></script>
+  <title>UFO Sightings</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    $(document).ready(function(){
+    $('#data').after('<div id="nav"></div>');
+    var rowsShown = 50;
+    var rowsTotal = $('#data tbody tr').length;
+    var numPages = (rowsTotal)/rowsShown;
+    for(i = 0;i < numPages;i++) {
+        var pageNum = i + 1;
+        $('#nav').append('<a href="#" rel="'+i+'">'+pageNum+'</a> ');
+    }
+    $('#data tbody tr').hide();
+    $('#data tbody tr').slice(0, rowsShown).show();
+    $('#nav a:first').addClass('active');
+    $('#nav a').bind('click', function(){
+
+        $('#nav a').removeClass('active');
+        $(this).addClass('active');
+        var currPage = $(this).attr('rel');
+        var startItem = currPage * rowsShown;
+        var endItem = startItem + rowsShown;
+        $('#data tbody tr').css('opacity','0.0').hide().slice(startItem, endItem).
+        css('display','table-row').animate({opacity:1}, 300);
+
+      });
+    });
+  </script>
+</head>
+
+  <header>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">UFO Sighting Headquarters</a>
+        </div>
+      </div><!-- /.container-fluid -->
+    </nav>
+  </header>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h1>UFO Filter Engine</h1>
+        <div class="form-group">
+          <input type="text" class="form-control" id="dtime" placeholder="MM/DD/YYYY"><br>
+          <input type="text" class="form-control" id="city" placeholder="city">
+          <input type="text" class="form-control" id="state" placeholder="state"><br>
+          <input type="text" class="form-control" id="country" placeholder="country">
+          <br>
+          <input type="text" class="form-control" id="shape" placeholder="shape">
+          <br>
+          <input type="text" class="form-control" id="duration" placeholder="duration">
+          <br>
+          <a id="search" class="btn btn-default">Search</a>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <!--<table id='example' class="display" cellspacing="40" width="100%" >-->
+        <table id="data" class="table">
+          <thead>
+            <tr>
+              <th>date</th>
+              <th>city</th>
+              <th>state</th>
+              <th>country</th>
+              <th>shape</th>
+              <th>duration minutes</th>
+              <th>comments</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <script src="ufo_hw.js" type="text/javascript"></script>
+  <script src="index_hw.js" type="text/javascript"></script>
+</body>
+
+</html>
